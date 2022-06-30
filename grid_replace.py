@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """ Simple script which remaps grid values based on rock type
 
  @Author:Terry Hannant <thannant@metafu.net>
@@ -97,19 +98,20 @@ if __name__ == "__main__":
     if not file_mappings:
         print(f"Unable to find mapping block {mapping_block_name}")
 
+        
     # Swap the dict for easu error messages
     rev_file_mappings = dict((v, k) for k, v in file_mappings.items())
 
     # Rejig the mappings to block->type->value where type is the ID instead of name
     mappings = {}
     for s, maps in source_mappings.items():
-        for k, v in maps.items():
+          for k, v in maps.items():
             if k not in mappings:
                 mappings[k] = {}
-            if (
-                s in file_mappings.keys()
-            ):  # If the type name is not present in file then ignore it
+            # If the type name is not present in file then ignore it
+            if (s in file_mappings.keys()):
                 mappings[k][file_mappings[s]] = v
+                print(f"Replacing {s}-{k} with {v}")
 
     # Reset reader
     reader.seek(0)
